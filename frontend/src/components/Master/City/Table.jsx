@@ -6,7 +6,6 @@ import DataTable from "react-data-table-component";
 import { MdDelete} from "react-icons/md"
 import {FaEdit} from "react-icons/fa"
 import CityPatchModel from "./CityPatchModel"
-import Export from "react-data-table-component"
 
 const CityTableDiv = ({mode,remark,data,handleData,value}) => {
   
@@ -24,23 +23,10 @@ const CityTableDiv = ({mode,remark,data,handleData,value}) => {
      handleData()
     },[value])
 
-    const downloadCSV = (data) => {
-      const filteredData = data.map(({ userId, ...rest }) => rest);
-      const csvData = filteredData.map(row => Object.values(row).join(',')).join('\n');
-      const blob = new Blob([csvData], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `data.csv`);
-      link.click();
-    };
-
-    const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, []);
-
     const customStyles = {
       rows:{
           style: {
-              minHeight: '72px',  // override the row height
+              minHeight: '25px',  // override the row height
           },
       },
       headCells: {
@@ -69,8 +55,7 @@ const CityTableDiv = ({mode,remark,data,handleData,value}) => {
       },
     ];
   return (
-    <div style={{marginTop:"25px",boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",padding:"20px",borderRadius:"20px"}}>
-     <Button onClick={()=>downloadCSV(data)} bgColor='green.500' _hover={{bgColor:"green.400"}} color='white'>Export CSV</Button>
+    <div style={{marginTop:"15px",boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",padding:"10px",borderRadius:"20px"}}>
 <DataTable
                 columns={columns}
                 pagination
@@ -81,7 +66,6 @@ const CityTableDiv = ({mode,remark,data,handleData,value}) => {
                 fixedHeader
                 fixedHeaderScrollHeight="400px"
                 customStyles={customStyles}
-                actions={actionsMemo}
                       />
     </div>
   )

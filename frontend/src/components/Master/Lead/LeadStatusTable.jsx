@@ -5,12 +5,12 @@ import DataTable from "react-data-table-component";
   import axios from "axios"
 import { MdDelete} from "react-icons/md"
 import {FaEdit} from "react-icons/fa"
-import StatePatchModal from "./statePatchModal"
+import LeadStatusPatchModal  from "./LeadStatusPatchModal"
 
-const StateTableDiv = ({mode,remark,data,handleData,value}) => {
+const LeadStatusTableDiv = ({data,handleData,value}) => {
   
     const handleDelete=async(id)=>{    
-        const data=await axios.delete(`http://localhost:8080/masterstate/delete/${id}`)
+        const data=await axios.delete(`http://localhost:8080/leadsstatus/delete/${id}`)
         console.log(data)
         handleData()
     }
@@ -18,20 +18,12 @@ const StateTableDiv = ({mode,remark,data,handleData,value}) => {
         transform:"scale(1.1)",
         transition:"0.5s"
       }
-    console.log(data)
+    console.log("line 21",data)
+
     useEffect(()=>{
      handleData()
     },[value])
-    const downloadCSV = (data) => {
-      const filteredData = data.map(({ userId, ...rest }) => rest);
-      const csvData = filteredData.map(row => Object.values(row).join(',')).join('\n');
-      const blob = new Blob([csvData], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `data.csv`);
-      link.click();
-    };
+    
 
     const customStyles = {
       rows: {
@@ -48,23 +40,25 @@ const StateTableDiv = ({mode,remark,data,handleData,value}) => {
   };
 
     const columns = [
-      { name: "Country Name" ,selector: (row) => row.countryname, sortable: true,},
-      { name: "State Name" ,selector: (row) => row.state, sortable: true,},
+      { name: "Status" ,selector: (row) => row.status, sortable: true,},
+      { name: "Description" ,selector: (row) => row.desc, sortable: true,},
       {
         name: "Action",
         selector: (row) => (
       
               <p>
-                <Flex gap='20px'>
-              <StatePatchModal name={<Icon as={FaEdit}  color="#3182ce" fontSize="25px" _hover={{transform:"scale(1.1)",transition:"0.5s"}}></Icon>} bgcolor={"white"} hover={hover} id={row._id} patchstate={row.state} patchcountryname={row.countryname}  handleData={handleData}/>
+              <Flex gap='20px'>
+              <LeadStatusPatchModal name={<Icon as={FaEdit}  color="#3182ce" fontSize="25px" _hover={{transform:"scale(1.1)",transition:"0.5s"}}></Icon>} bgcolor={"white"} hover={hover} id={row._id} status={row.status}
+              desc={row.desc} handleData={handleData}/>
               <Icon as={MdDelete}  color="red" fontSize="25px" _hover={{transform:"scale(1.1)",transition:"0.5s"}} border="none" onClick={()=>handleDelete(row._id)}></Icon>
               </Flex>
-              </p>          
+              </p >          
         ),        
       },
     ];
   return (
-    <div style={{marginTop:"15px",boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",padding:"20px",borderRadius:"20px"}}>
+    <div style={{marginTop:"15px",boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",padding:"10px",borderRadius:"20px"}}>
+      
 <DataTable
                 columns={columns}
                 pagination
@@ -80,4 +74,4 @@ const StateTableDiv = ({mode,remark,data,handleData,value}) => {
   )
 }
 
-export default StateTableDiv
+export default LeadStatusTableDiv

@@ -4,10 +4,12 @@ import axios from 'axios'
 import PageTitle from '../../Title'
 import {Link} from "react-router-dom"
 import BatchTableDiv from './Table'
+import { downloadCSV } from '../DownloadTable'
 
 const Batch = () => {
   const [value,setValue]=useState("")
    const [data,setData]=useState("")
+   const [filtervalue,setFilterValue]=useState("")
     const handleData=async()=>{
         if(value){
             const data=await axios.get(`http://localhost:8080/masterbatch?batchname=${value}`)
@@ -23,22 +25,31 @@ const Batch = () => {
    transform:"scale(1.1)",
    transition:"0.5s"
  }
- console.log("batch",data)
+ console.log("batch-27",data)
+ const filterarr =data.length>0?data.filter((item) => {
+  const batchcode = typeof item.batchcode === "string" ? item.batchcode.toLowerCase() : "";
+  const batchname = typeof item.batchname === "string" ? item.batchname.toLowerCase() : "";
+  const startdate = typeof item.startdate === "string" ? item.startdate.toLowerCase() : "";
+  const completiondate = typeof item.completiondate === "string" ? item.completiondate.toLowerCase() : "";
+  const classroom = typeof item.classroom === "string" ? item.classroom.toLowerCase() : "";
+  const batchstatus = typeof item.batchstatus === "string" ? item.batchstatus.toLowerCase() : "";
+  return batchcode.includes(filtervalue.toLowerCase())|| batchname.includes(filtervalue.toLowerCase())|| startdate.includes(filtervalue.toLowerCase())|| completiondate.includes(filtervalue.toLowerCase())|| classroom.includes(filtervalue.toLowerCase())|| batchstatus.includes(filtervalue.toLowerCase())
+}):[]
   return (
     <div style={{marginTop:"5px"}}>
-      <PageTitle title="Batch Details"/>
-      <Box textAlign={"start"} width="98%" margin="auto"  fontFamily={"sans-serif"}  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"} borderRadius="20px" padding="20px">
-        <Box>
-        <Flex justifyContent={"space-between"} width="95%" marginTop="5px">
-            <Input width="30%" placeholder={"Search"} onChange={(e)=>setValue(e.target.value)}></Input>
-            {/* <Button backgroundColor={"#be1e2d"} color="white" _hover={{transform:"scale(1.1)",transition:"0.5s"}}>
-                <Text fontSize={"18px"}>Add new node</Text>
-            </Button> */}
-          <Link to={'/master/batch/addbatch'}><Button  backgroundColor="#be1e2d" color="white" _hover={{transform:"scale(1.1)",transition:"0.5s"}}>Add New Batch</Button></Link>
+      <Box>
+        <Flex justifyContent={"space-between"} width="98%" marginTop="5px">
+        <Box><PageTitle title="Batch Details"/></Box>
+            <Input mt="10px" width="30%" border="2px solid gray" placeholder={"Search"} onChange={(e)=>setFilterValue(e.target.value)} value={filtervalue}></Input>
+           <Flex  justifyContent={"end"} gap="10px">
+         <Box>  <Button  onClick={()=>downloadCSV(data)} mt="10px" fontSize="15px" bgColor='green.500' _hover={{bgColor:"green.400"}} color='white'>Export CSV</Button></Box>
+         <Link to={'/superadmindashboard/master/batch/addbatch'}><Button fontSize="15px"  backgroundColor="blue.600" color="white" _hover={{bgColor:"blue.500"}} mt="10px">Add New Batch</Button></Link>
+           </Flex>
         </Flex>
-        </Box>
-      <BatchTableDiv handleData={handleData} value={value} data={data}/>
-      {/* <Tablediv handleData={handleData} value={value} data={data}/> */}
+        </Box> 
+      <Box textAlign={"start"} width="98%" margin="auto"  fontFamily={"sans-serif"}  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"} borderRadius="20px">
+        
+      <BatchTableDiv handleData={handleData} value={value} data={filterarr}/>
       </Box>
     </div>
   )

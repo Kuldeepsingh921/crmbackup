@@ -5,10 +5,12 @@ import axios from 'axios'
 import PageTitle from '../../Title'
 import ClassModal from './ClassModel'
 import CityTablediv from './Table'
+import { downloadCSV } from '../DownloadTable'
 
 const Class = () => {
   const [value,setValue]=useState("")
    const [data,setData]=useState("")
+   const [filtervalue,setFilterValue]=useState("")
     const handleData=async()=>{
         if(value){
             const data=await axios.get(`http://localhost:8080/masterclass?location=${value}`)
@@ -24,22 +26,28 @@ const Class = () => {
    transform:"scale(1.1)",
    transition:"0.5s"
  }
- console.log("Class",data)
+ console.log("class-28",data)
+ const filterarr =data.length>0?data.filter((item) => {
+  const location = typeof item.location === "string" ? item.location.toLowerCase() : "";
+  const noofseats = typeof item.noofseats === "string" ? item.noofseats.toLowerCase() : "";
+  const classroom = typeof item.classroom === "string" ? item.classroom.toLowerCase() : "";
+  return location.includes(filtervalue.toLowerCase())|| noofseats.includes(filtervalue.toLowerCase())|| classroom.includes(filtervalue.toLowerCase())
+}):[]
   return (
     <div style={{marginTop:"5px"}}>
-      <PageTitle title="Class Details"/>
-      <Box textAlign={"start"} width="98%" margin="auto"  fontFamily={"sans-serif"}  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"} borderRadius="20px" padding="20px">
-        <Box>
-        <Flex justifyContent={"space-between"} width="95%" marginTop="5px">
-            <Input width="30%" placeholder={"Search"} onChange={(e)=>setValue(e.target.value)}></Input>
-            {/* <Button backgroundColor={"#be1e2d"} color="white" _hover={{transform:"scale(1.1)",transition:"0.5s"}}>
-                <Text fontSize={"18px"}>Add new node</Text>
-            </Button> */}
-            <ClassModal name="Add New Class"  handleData={handleData}/>
+<Box>
+        <Flex justifyContent={"space-between"} width="98%" marginTop="5px">
+        <Box><PageTitle title="Class Details"/></Box>
+            <Input mt="10px" width="30%" border="2px solid gray" placeholder={"Search"} onChange={(e)=>setFilterValue(e.target.value)} value={filtervalue}></Input>
+           <Flex  justifyContent={"end"} gap="10px">
+         <Box>  <Button  onClick={()=>downloadCSV(data)} mt="10px" fontSize="15px" bgColor='green.500' _hover={{bgColor:"green.400"}} color='white'>Export CSV</Button></Box>
+            <ClassModal name="Add New Class" bgcolor={"#c63a47"} hover={hover} handleData={handleData} headername="Class Details"/>
+           </Flex>
         </Flex>
-        </Box>
-      <CityTablediv handleData={handleData} value={value} data={data}/>
-      {/* <Tablediv handleData={handleData} value={value} data={data}/> */}
+        </Box>      
+        <Box textAlign={"start"} width="98%" margin="auto"  fontFamily={"sans-serif"}  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"} borderRadius="20px">
+       
+      <CityTablediv handleData={handleData} value={value} data={filterarr}/>
       </Box>
     </div>
   )

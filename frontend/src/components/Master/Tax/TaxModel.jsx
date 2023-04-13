@@ -28,9 +28,9 @@ export default function TaxModel({name,bgcolor,hover,handleData,headername}) {
     onClose()
     }
     return (
-      <>
-        <Button backgroundColor="#be1e2d" color="white" _hover={{transform:"scale(1.1)",transition:"0.5s"}}>
-                <Text fontSize={"18px"} onClick={onOpen}>{name}</Text>
+      <div style={{marginTop:"10px"}}>
+        <Button backgroundColor="blue.600" color="white" _hover={{bgColor:"blue.500"}}>
+                <Text fontSize={"15px"} onClick={onOpen}>{name}</Text>
             </Button>
   
         <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
@@ -53,6 +53,6 @@ export default function TaxModel({name,bgcolor,hover,handleData,headername}) {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </>
+      </div>
     )
   }

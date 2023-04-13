@@ -33,14 +33,14 @@ export default function CourseModal({name,bgcolor,hover,handleData}) {
     }
     return (
       <>
-        <Button backgroundColor="#be1e2d" color="white" _hover={{transform:"scale(1.1)",transition:"0.5s"}}>
-                <Text fontSize={"18px"} onClick={onOpen}>{name}</Text>
+        <Button backgroundColor="blue.600" color="white" _hover={{bgColor:"blue.500"}} mt="10px">
+                <Text fontSize={"15px"} onClick={onOpen}>{name}</Text>
             </Button>
   
         <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Mode of Delivery</ModalHeader>
+            <ModalHeader>Course Details</ModalHeader>
             <ModalCloseButton />
             <ModalBody lineHeight={"30px"}>
                 <label htmlFor="">Course Name</label>

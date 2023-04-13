@@ -5,9 +5,12 @@ import axios from 'axios'
 import PageTitle from '../../Title'
 import OrganisationModal from './oraganisationModal'
 import OrganisationTablediv from './oragnisationTable'
+import { downloadCSV } from '../DownloadTable';
+
 const Organisation = () => {
   const [value,setValue]=useState("")
    const [data,setData]=useState("")
+   const [filtervalue,setFilterValue]=useState("")
     const handleData=async()=>{
         if(value){
             const data=await axios.get(`http://localhost:8080/masterorganisation?name=${value}`)
@@ -22,22 +25,27 @@ const Organisation = () => {
    transform:"scale(1.1)",
    transition:"0.5s"
  }
- 
+ console.log("organisation",data)
+ const filterarr =data.length>0?data.filter((item) => {
+  const name = typeof item.name === "string" ? item.name.toLowerCase() : "";
+  const email = typeof item.email === "string" ? item.email.toLowerCase() : "";
+  const mobileno = typeof item.mobileno === "string" ? item.mobileno.toLowerCase() : "";
+  return name.includes(filtervalue.toLowerCase()) || email.includes(filtervalue.toLowerCase())|| mobileno.includes(filtervalue.toLowerCase())
+}):[]
   return (
     <div style={{marginTop:"5px"}}>
-      <PageTitle title="Organisation Details"/>
-      <Box textAlign={"start"} width="98%" margin="auto"  fontFamily={"sans-serif"}  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"} padding="20px" borderRadius='20px'>
-        <Box>
-        <Flex justifyContent={"space-between"} width="95%" marginTop="5px">
-            <Input width="30%" placeholder={"Search"} onChange={(e)=>setValue(e.target.value)}></Input>
-            {/* <Button backgroundColor={"#be1e2d"} color="white" _hover={{transform:"scale(1.1)",transition:"0.5s"}}>
-                <Text fontSize={"18px"}>Add new node</Text>
-            </Button> */}
-            <OrganisationModal name="Add new Organisation" bgcolor={"#c63a47"} hover={hover} handleData={handleData} headername="Organisation Details"/>
+     <Box>
+        <Flex justifyContent={"space-between"} width="98%" marginTop="5px">
+        <Box><PageTitle title="Organisation Details"/></Box>
+            <Input mt="10px" width="30%" border="2px solid gray" placeholder={"Search"} onChange={(e)=>setFilterValue(e.target.value)} value={filtervalue}></Input>
+           <Flex  justifyContent={"end"} gap="10px">
+         <Box>  <Button  onClick={()=>downloadCSV(data)} mt="10px" fontSize="15px" bgColor='green.500' _hover={{bgColor:"green.400"}} color='white'>Export CSV</Button></Box>
+            <OrganisationModal name="Add New Oganisation" bgcolor={"#c63a47"} hover={hover} handleData={handleData} headername="Organisation Details"/>
+           </Flex>
         </Flex>
         </Box>
-       
-      <OrganisationTablediv handleData={handleData} value={value} data={data}/>
+       <Box textAlign={"start"} width="98%" margin="auto"  fontFamily={"sans-serif"} borderRadius='20px'>
+      <OrganisationTablediv handleData={handleData} value={value} data={filterarr}/>
       </Box>
     </div>
   )

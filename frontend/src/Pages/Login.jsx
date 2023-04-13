@@ -78,14 +78,15 @@ import {signIn} from "../action/authAction"
           spacing={{ base: 10, lg: 32 }}
           py={{ base: 10, sm: 20, lg: 32 }}>
             
-          <Stack spacing={{ base: 1, md: 1 }}>
-          <Image  h='250px' w='250px' src='https://cnswebtechnologies.com/newsitecss/image/enterprise/logos/logo20.png' />
+          <Stack w="600px" mt="50px" spacing={{ base: 1, md: 1 }} textAlign="start">
+          <Image  h='auto' w='100vh' src='https://www.didm.in/assets/all/images/didm-logo-reg.png' />
             <Text
-              lineHeight={1.5}
+              lineHeight={2}
               fontFamily={"Times New Roman"}
               fontWeight='bold'
               fontSize={{ base: 'sm', sm: 'md', md: 'xl', lg: 'xl' }}>
-              <span style={{color:"green"}}><em>CNS WEB TECHNOLOGIES (P) LTD</em></span> provides superior services for managing the implementation of Internet Development Systems as well as Software System in the industry, serving both the domestic and international.
+           
+                <span style={{color:"green"}}><em>In this era of digitization</em></span> , Digital Marketing is practiced by every company. At DIDM, we commit to provide quality training in advanced digital marketing courses and in-depth knowledge of digital marketing strategies to meet the growing demands of skilled individuals across the world.
             </Text>
             
           </Stack>

@@ -50,7 +50,7 @@ export default function BatchPatchModel({name,handleData,batchcode,batchname,sta
     },[])
     return (
       <>
-        <Text fontSize={"18px"} onClick={onOpen}>{name}</Text>
+        <Text fontSize={"15px"} onClick={onOpen}>{name}</Text>
   <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>

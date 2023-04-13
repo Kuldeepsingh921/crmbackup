@@ -13,6 +13,7 @@ import Followup from '../Pages/Followup'
 import Source from '../Pages/Source'
 import Department from '../Pages/Department'
 import ManageProfile from '../Pages/ManageProfile'
+import LeadStatusTableDiv from './Master/Lead/LeadStatusTable'
 const MasterRoute = () => {
   return (
     <div>

@@ -38,8 +38,9 @@ import {ImBooks} from "react-icons/im"
 import {BsBank} from "react-icons/bs"
 import {FaCity} from "react-icons/fa"
 import {BsPeopleFill} from "react-icons/bs"
-import {SiGoogleclassroom} from "react-icons/si"
+import {SiGoogleads, SiGoogleclassroom} from "react-icons/si"
 import {MdOutlineClass} from "react-icons/md"
+import {GrStatusUnknown} from "react-icons/gr"
 import {useSelector} from "react-redux"
 
 const Sidebar1 = () => {
@@ -199,6 +200,18 @@ const Sidebar1 = () => {
                </Flex>
                </MenuItem>
                 </Link>
+
+               
+              <Link to='master/leadstatus'>
+              <MenuItem>
+        <Flex gap="10px" alignItems={"center"}>
+                <Icon as={GrStatusUnknown} fontWeight={"500"} fontSize="20px" color="#818194" textAlign="start"></Icon>
+                <Text fontWeight={"600"} fontSize="18px" color="#818194" textAlign="start">Leads Status</Text>
+               </Flex>
+               </MenuItem>
+              </Link>
+              
+
                 <Link to="master/class">
                 <MenuItem>
         <Flex gap="10px" alignItems={"center"}>
@@ -215,7 +228,7 @@ const Sidebar1 = () => {
                </Flex>
                </MenuItem>
                </Link>
-              
+             
     </SubMenu>
     <SubMenu label={<Flex gap="10px" alignItems={"center"} marginTop="10px">
                 <Icon as={BsPatchQuestionFill} fontWeight={"500"} fontSize="20px" color="#818194" textAlign="start"></Icon>
@@ -245,6 +258,7 @@ const Sidebar1 = () => {
                 <Text fontWeight={"600"} fontSize="18px" color="#818194" textAlign="start">Mode of delivery</Text>
                </Flex>
                </MenuItem>
+              
     </SubMenu>
     <SubMenu label={<Flex gap="10px" alignItems={"center"} marginTop="10px">
                 <Icon as={FaChalkboardTeacher} fontWeight={"500"} fontSize="20px" color="#818194" textAlign="start"></Icon>

@@ -6,7 +6,6 @@ import DataTable from "react-data-table-component";
 import { MdDelete} from "react-icons/md"
 import {FaEdit} from "react-icons/fa"
 import DepartmentPatchModal from "./departmentPatchModal"
-import Export from "react-data-table-component"
 const DepartmentTableDiv = ({mode,remark,data,handleData,value}) => {
   
     const handleDelete=async(id)=>{    
@@ -33,12 +32,11 @@ const DepartmentTableDiv = ({mode,remark,data,handleData,value}) => {
       link.click();
     };
 
-    const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, []);
 
     const customStyles = {
       rows: {
           style: {
-              minHeight: '72px', // override the row height
+              minHeight: '25px', // override the row height
           },
       },
       headCells: {
@@ -65,19 +63,17 @@ const DepartmentTableDiv = ({mode,remark,data,handleData,value}) => {
       },
     ];
   return (
-    <div style={{marginTop:"25px",boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",padding:"20px",borderRadius:"20px"}}>
-    <Button onClick={()=>downloadCSV(data)} bgColor='green.500' _hover={{bgColor:"green.400"}} color='white'>Export CSV</Button>
+    <div style={{marginTop:"15px",boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",padding:"10px",borderRadius:"20px"}}>
 <DataTable
                 columns={columns}
                 pagination
                 highlightOnHover
                 data={data}
-                subHeader
+                //subHeader
                 persistTableHead
                 fixedHeader
                 fixedHeaderScrollHeight="400px"
                 customStyles={customStyles}
-                actions={actionsMemo}
                       />
     </div>
   )

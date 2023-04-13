@@ -10,15 +10,20 @@ import {
   } from '@chakra-ui/react'
   import axios from "axios"
 import {useState} from "react"
-export default function FollowupModal({name,bgcolor,hover,handleData,headername}) {
+export default function PatchModel({name,bgcolor,hover,id,patchmode,patchremark,handleData}) {
     const { isOpen, onOpen, onClose } = useDisclosure()
-  const [followup,setFollowup]=useState("")
+    const [mode,setMode]=useState(patchmode)
+    const [remark,setRemark]=useState(patchremark)
+    // const handleData=async()=>{
+    //   const data=await axios.get("http://localhost:8080/modeofdelivery")
+    // }
     const handleClick=async()=>{
       const send={
-       followup:followup
+        mode:mode,
+        remark:remark
       }
-     
-      const res=await axios.post("http://localhost:8080/masterfollowup/addfollowup",send)
+      console.log(id)
+     const res=await axios.patch(`http://localhost:8080/modeofdelivery/${id}`,send)
       const data=await res.data
       console.log(data)
       handleData()
@@ -27,18 +32,17 @@ export default function FollowupModal({name,bgcolor,hover,handleData,headername}
     }
     return (
       <>
-        <Button backgroundColor="blue.600" color="white" _hover={{bgColor:"blue.500"}} mt="10px">
-                <Text fontSize={"15px"} onClick={onOpen}>{name}</Text>
-            </Button>
-  
-        <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+                <Text fontSize={"18px"} onClick={onOpen}>{name}</Text>
+  <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>{headername}</ModalHeader>
+            <ModalHeader>Mode of Delivery</ModalHeader>
             <ModalCloseButton />
-            <ModalBody lineHeight={"30px"}>
-            <label htmlFor="">Follow Up Medium</label>
-             <Input placeholder="Follow Up Medium" onChange={(e)=>setFollowup(e.target.value)}></Input>
+            <ModalBody>
+                <label htmlFor="">Mode</label>
+             <Input placeholder='Mode' onChange={(e)=>setMode(e.target.value)} value={mode}></Input>
+            <label htmlFor="">Remark</label>
+             <Input placeholder="Remark" onChange={(e)=>setRemark(e.target.value)} value={remark}></Input>
             </ModalBody>
   
             <ModalFooter>

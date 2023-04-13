@@ -40,9 +40,9 @@ export default function OrganisationModal({name,bgcolor,hover,handleData,headern
     onClose()
     }
     return (
-      <>
-        <Button backgroundColor="#be1e2d" color="white" _hover={{transform:"scale(1.1)",transition:"0.5s"}}>
-                <Text fontSize={"18px"} onClick={onOpen}>{name}</Text>
+      <div style={{marginTop:"10px"}}>
+        <Button bgColor="blue.600" color="white" _hover={{bgColor:"blue.500"}}>
+                <Text fontSize={"15px"} onClick={onOpen}>{name}</Text>
             </Button>
   
         <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose} size="2xl">
@@ -55,7 +55,7 @@ export default function OrganisationModal({name,bgcolor,hover,handleData,headern
                 <Flex gap="10px" alignItems={"center"} width="45%" margin="auto">
                     <Box width="25%" textAlign={"end"}> <label htmlFor=""  margin="auto">Name</label></Box>
                <Box width="70%">
-               <Input placeholder='Organisation Name' onChange={(e)=>setName(e.target.value)} size="md"></Input>
+               <Input placeholder='Organisation Name' onChange={(e)=>setName(e.target.value)} size="md" ></Input>
                </Box>
             </Flex>
                 <Flex gap="10px" alignItems={"center"} width="45%" margin="auto">
@@ -112,6 +112,6 @@ export default function OrganisationModal({name,bgcolor,hover,handleData,headern
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </>
+      </div>
     )
   }

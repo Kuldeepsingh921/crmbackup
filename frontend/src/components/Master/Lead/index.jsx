@@ -3,51 +3,54 @@ import {Box,Text,Flex,Input,Icon,Search,Label,Button, Table} from "@chakra-ui/re
 import {AiOutlineSearch} from "react-icons/ai"
 import axios from 'axios'
 import PageTitle from '../../Title'
-import SourceModal from './SourceModal'
-import SourceTablediv from './SourceTable'
-import { downloadCSV } from '../DownloadTable'
-const Source = () => {
+import LeadStatusModal from './LeadStatusModal'
+import LeadStatusPatchModal from './LeadStatusPatchModal'
+import { downloadCSV } from '../DownloadTable';
+import LeadStatusTableDiv from './LeadStatusTable'
+const LeadStatus = () => {
   const [value,setValue]=useState("")
    const [data,setData]=useState("")
    const [filtervalue,setFilterValue]=useState("")
     const handleData=async()=>{
         if(value){
-            const data=await axios.get(`http://localhost:8080/mastersource?sourcename=${value}`)
+            const data=await axios.get(`http://localhost:8080/leadsstatus?status=${value}`)
             setData(data.data)
         }
         else{
-            const data=await axios.get(`http://localhost:8080/mastersource`)
+            const data=await axios.get(`http://localhost:8080/leadsstatus`)
             setData(data.data)
         }
       }
+      console.log("data",data)
  const hover={
    transform:"scale(1.1)",
    transition:"0.5s"
  }
- console.log("source",data)
+
+ console.log("leads",data)
  const filterarr =data.length>0?data.filter((item) => {
-  const sourcename = typeof item.sourcename === "string" ? item.sourcename.toLowerCase() : "";
-  
-  return sourcename.includes(filtervalue.toLowerCase())
+  const status = typeof item.status === "string" ? item.status.toLowerCase() : "";
+  const desc = typeof item.desc === "string" ? item.desc.toLowerCase() : "";
+  return status.includes(filtervalue.toLowerCase()) || desc.includes(filtervalue.toLowerCase())
 }):[]
   return (
     <div style={{marginTop:"5px"}}>
-       <Box>
+      <Box>
         <Flex justifyContent={"space-between"} width="98%" marginTop="5px">
-        <Box><PageTitle title="Source Details"/></Box>
+        <Box><PageTitle title="Leads Status"/></Box>
             <Input mt="10px" width="30%" border="2px solid gray" placeholder={"Search"} onChange={(e)=>setFilterValue(e.target.value)} value={filtervalue}></Input>
            <Flex  justifyContent={"end"} gap="10px">
          <Box>  <Button  onClick={()=>downloadCSV(data)} mt="10px" fontSize="15px" bgColor='green.500' _hover={{bgColor:"green.400"}} color='white'>Export CSV</Button></Box>
-            <SourceModal name="Add New Source" bgcolor={"#c63a47"} hover={hover} handleData={handleData} headername="Source Details"/>
+            <LeadStatusModal name="Add New Lead" bgcolor={"#c63a47"} hover={hover} handleData={handleData} headername="Leads Details"/>
            </Flex>
         </Flex>
         </Box>
-      <Box textAlign={"start"} width="98%" margin="auto"  fontFamily={"sans-serif"}  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}  borderRadius='20px'>
-       
-      <SourceTablediv handleData={handleData} value={value} data={filterarr}/>
+      <Box textAlign={"start"} width="98%" margin="auto"  fontFamily={"sans-serif"}  borderRadius='20px'>
+  
+      <LeadStatusTableDiv handleData={handleData} value={value} data={filterarr}/>
       </Box>
     </div>
   )
 }
 
-export default Source
+export default LeadStatus

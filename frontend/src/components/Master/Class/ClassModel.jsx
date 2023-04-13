@@ -34,8 +34,8 @@ export default function ClassModal({name,bgcolor,hover,handleData}) {
    
     return (
       <>
-        <Button backgroundColor="#be1e2d" color="white" _hover={{transform:"scale(1.1)",transition:"0.5s"}}>
-                <Text fontSize={"18px"} onClick={onOpen}>{name}</Text>
+        <Button backgroundColor="blue.600" color="white" _hover={{bgColor:"blue.500"}} mt="10px">
+                <Text fontSize={"15px"} onClick={onOpen}>{name}</Text>
             </Button>
         <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
@@ -45,7 +45,7 @@ export default function ClassModal({name,bgcolor,hover,handleData}) {
             <ModalBody lineHeight={"30px"}>
                 <label htmlFor="">Location</label>
                 <Input placeholder='Location' onChange={(e)=>setLocation(e.target.value)} />
-             
+                             
             <label htmlFor="">No. Of Seats</label>
             <Input placeholder='No Of Seats' onChange={(e)=>setNoOfSeats(e.target.value)} />
              <label htmlFor="">Class Room</label>

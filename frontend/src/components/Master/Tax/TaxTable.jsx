@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Icon,Flex, Button} from '@chakra-ui/react'
 import DataTable from "react-data-table-component";
   import {useEffect} from "react"
@@ -6,9 +6,7 @@ import DataTable from "react-data-table-component";
 import { MdDelete} from "react-icons/md"
 import {FaEdit} from "react-icons/fa"
 import TaxpatchModel from "./TaxpatchModel"
-import Export from "react-data-table-component"
 const TaxTableDiv = ({mode,remark,data,handleData,value}) => {
-  
     const handleDelete=async(id)=>{    
         const data=await axios.delete(`http://localhost:8080/mastertaxroute/delete/${id}`)
         console.log(data)
@@ -22,35 +20,43 @@ const TaxTableDiv = ({mode,remark,data,handleData,value}) => {
     useEffect(()=>{
      handleData()
     },[value])
-    const downloadCSV = (data) => {
-      const filteredData = data.map(({ userId, ...rest }) => rest);
-      const csvData = filteredData.map(row => Object.values(row).join(',')).join('\n');
-      const blob = new Blob([csvData], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `data.csv`);
-      link.click();
-    };
 
-    const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, []);
+    
+
     const customStyles = {
       rows: {
           style: {
-              minHeight: '72px', // override the row height
+              minHeight: '25px', // override the row height
           },
       },
+      columns: {
+        style: {
+            minWidth: '55px', // override the row height
+        },
+    },
       headCells: {
           style: {
              fontWeight:"bold",
-             fontSize:"14px"
+             fontSize:"14px",
+             //backgroundColor: '#ABDCFB',
+             height:"40px",
+            //  borderBottom: '1px solid #ddd',
+            //  color: '#333',
+            //  padding: '10px',
           },
       },
+      cells: {
+        style: {
+           //width:"50px",
+           minWidth:"100px"
+        },
+    },
   };
 
     const columns = [
      
-      { name: "Tax" ,selector: (row) => row.tax, sortable: true,},
+    { name: "Tax" ,selector: (row) => row.tax, sortable: true,
+    },
       { name: "Tax Description" ,selector: (row) => row.description, sortable: true,},
       {
         name: "Action",
@@ -66,19 +72,18 @@ const TaxTableDiv = ({mode,remark,data,handleData,value}) => {
       },
     ];
   return (
-    <div style={{marginTop:"25px",boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",padding:"20px",borderRadius:"20px"}} >
-    <Button onClick={()=>downloadCSV(data)} bgColor='green.500' _hover={{bgColor:"green.400"}} color='white'>Export CSV</Button>
+    <div style={{marginTop:"15px",boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",padding:"10px",borderRadius:"20px"}} >
+   
 <DataTable
                 columns={columns}
                 pagination
                 highlightOnHover
                 data={data}
-                subHeader
+                //subHeader
                 persistTableHead
                 fixedHeader
                 fixedHeaderScrollHeight="400px"
                 customStyles={customStyles}
-                actions={actionsMemo}
                       />
     </div>
   )

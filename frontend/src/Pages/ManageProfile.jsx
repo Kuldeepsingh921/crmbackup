@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { toast } from "react-toastify";
  export const ManageProfile = () => {
   const [admindata,setAdmindata]=useState("")
-  
+
 const countryarr=[ 
     {name: 'Afghanistan', code: 'AF'}, 
     {name: 'Åland Islands', code: 'AX'}, 
@@ -37,12 +37,12 @@ const countryarr=[
     {name: 'Bosnia and Herzegovina', code: 'BA'}, 
     {name: 'Botswana', code: 'BW'}, 
     {name: 'Bouvet Island', code: 'BV'}, 
-    {name: 'Brazil', code: 'BR'}, 
+    {name: 'Brazil', code: 'BR'},
     {name: 'British Indian Ocean Territory', code: 'IO'}, 
     {name: 'Brunei Darussalam', code: 'BN'}, 
     {name: 'Bulgaria', code: 'BG'}, 
     {name: 'Burkina Faso', code: 'BF'}, 
-    {name: 'Burundi', code: 'BI'}, 
+    {name: 'Burundi', code: 'BI'},
     {name: 'Cambodia', code: 'KH'}, 
     {name: 'Cameroon', code: 'CM'}, 
     {name: 'Canada', code: 'CA'}, 
@@ -260,7 +260,7 @@ console.log(auth._id)
    useEffect(()=>{
     try{
       axios.get(`http://localhost:8080/superadmin/${auth._id}`).then((res)=>{
-        console.log(res.data)
+        console.log("MP",res.data)
       setProfileData(res.data)
       })
       .catch((err)=>{
@@ -272,31 +272,30 @@ console.log(auth._id)
     }
    },[auth])
 
-   console.log(profiledata)
-    
+   console.log(profiledata,275)
+   const [firstname,setFirstname]=useState("")
+   const [email,setEmail]=useState(auth.email)
+   const [address,setAddress]=useState("")
+   const [password,setPassword]=useState("")
+   const [city,setCity]=useState("")
+   const [postalcode,setPostalCode]=useState("")
+   const [country,setCountry]=useState("")
+   const [website,setWebsite]=useState("")
+   const [imageData,setImageData]=useState("")
+   const [image,setImage]=useState("")
+   
    useEffect(()=>{
-     setFirstname(profiledata.firstname)
+     setFirstname(profiledata.name)
      setAddress(profiledata.address)
      setEmail(profiledata.email)
-     setPostalCode(profiledata.postalcode)
+     setPostalCode(profiledata.zipcode)
      setCountry(profiledata.country)
      setCity(profiledata.city)
    },[profiledata])
 
-  const [firstname,setFirstname]=useState()
-  const [email,setEmail]=useState(auth.email)
-  const [address,setAddress]=useState("")
-  const [password,setPassword]=useState("")
-  const [city,setCity]=useState("")
-  const [postalcode,setPostalCode]=useState("")
-  const [country,setCountry]=useState("")
-  const [website,setWebsite]=useState("")
-  const [imageData,setImageData]=useState("")
-  const [image,setImage]=useState("")
+   
+   
 
-  console.log(typeof country)
-  console.log(postalcode)
-  console.log(image)
         
   const handleSubmit=async()=>{
     const formdata = new FormData()
@@ -306,7 +305,7 @@ console.log(auth._id)
     formdata.append("address",address)
     formdata.append("country",country)
     formdata.append("postalcode",postalcode)
-    formdata.append("image",image)
+    formdata.append("image",image) 
     formdata.append("UserId",auth._id)
 
     const res=await axios.patch(`http://localhost:8080/superadmin/${auth._id}`,formdata).then((res)=>{
@@ -326,35 +325,30 @@ console.log(auth._id)
           position: "top-center", 
           autoClose: 3000,
           hideProgressBar: true,
-          closeOnClick: true,
+          closeOnClick:true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
-          });
-     })
-}
-
-
-    
-       
-       
+          }); 
+     })              
+}     
   return (
     <div>
     <Flex width="95%" margin="auto" marginTop="30px" gap="20px">
-        <form style={{display:"flex",gap:"20px"}}>
+        <form style={{display:"flex",gap:"20px"}} onSubmit={handleSubmit}>
         <Box id="profile" width={"30%"} textAlign="start" boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px" padding="20px" borderRadius={"10px"} paddingBottom="40px">
            <Text fontSize="24px" fontWeight={"500"}>My Profile</Text>
            <hr style={{marginTop:"10px"}}/>
            <Flex marginTop="10px" gap="20px" alignItems={"center"}>
-            <Image src={profiledata.image ? `http://localhost:5000/${profiledata.image}` : 'https://dashboard.ifastacademy.com/public/avatars/avatar_1.jpg'} width="80px" height="80px" borderRadius={"50%"}></Image>
+            <Image src={profiledata.image ? `http://localhost:8080/${profiledata.image}` : 'https://dashboard.ifastacademy.com/public/avatars/avatar_1.jpg'} width="80px" height="80px" borderRadius={"50%"}></Image>
             <Box>
-            <Text fontSize={"20px"} fontWeight="500">{profiledata.firstname}</Text>
+            <Text fontSize={"20px"} fontWeight="500">{profiledata.name}</Text>
             <Text fontSize={"17px"} fontWeight="500">Super Admin</Text>
             </Box>
             </Flex>
             <hr style={{marginTop:"10px"}}/>
-            
+          
           <Box marginTop="10px" fontWeight="500" >
           <label htmlFor="" marginTop="10px" onChange={(e)=>setEmail(e.target.value)}>Email Address</label>
             <Input placeholder="Enter Email Address" value={email ||''}></Input>

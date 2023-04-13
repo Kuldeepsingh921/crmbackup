@@ -259,7 +259,7 @@ console.log(auth._id)
 
    useEffect(()=>{
     try{
-      axios.get(`http://localhost:8080/superadmin/${auth._id}`).then((res)=>{
+      axios.get(`http://localhost:8080/counsellor/${auth._id}`).then((res)=>{
         console.log(res.data)
       setProfileData(res.data)
       })

@@ -30,8 +30,11 @@ import ViewLeads from "./Enquiry/ViewLeads"
 import CreateCounsellor from '../Pages/AddCounsellor'
 import ShowCounsellorTable from '../Pages/ShowCounsellorTable'
 import CounsellorSidebar from "./CounsellorSidebar"
-import Modedelivery from '../Pages/Modedelivery'
+import Modedelivery from './Master/ModeOfDelivery/index'
 import ShowLeadsTable from '../Pages/ShowLeadsTable'
+import LeadStatusTableDiv from './Master/Lead/LeadStatusTable'
+import LeadStatus from './Master/Lead'
+
 const AllRoutes = () => {
   const auth=useSelector((store)=>store.authReducer)
   console.log(auth.token)
@@ -63,6 +66,7 @@ const AllRoutes = () => {
         <Route path="master/batch" element={<Batch />}></Route>
         <Route path="master/batch/addbatch" element={<AddBatch />}></Route>
         <Route path="master/class" element={<Class />}></Route>
+        <Route path="master/leadstatus" element={<LeadStatus />}></Route>
         <Route path="master/modeofdelivery" element={<Modedelivery />}></Route>
         <Route path="manageprofile" element={<ManageProfile />}></Route>
         <Route path="createcounsellor" element={<CreateCounsellor />}></Route>

@@ -10,20 +10,18 @@ import {
   } from '@chakra-ui/react'
   import axios from "axios"
 import {useState} from "react"
-export default function PatchModel({name,bgcolor,hover,id,patchmode,patchremark,handleData}) {
+export default function LeadStatusPatchModal({name,handleData,status,desc,id}) {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [mode,setMode]=useState(patchmode)
-    const [remark,setRemark]=useState(patchremark)
-    // const handleData=async()=>{
-    //   const data=await axios.get("http://localhost:8080/modeofdelivery")
-    // }
+    const [Status,setStatus]=useState(status)
+    const [Desc,setDesc]=useState(desc)
+
     const handleClick=async()=>{
-      const send={
-        mode:mode,
-        remark:remark
-      }
+        const send={
+            status:Status,
+            desc:Desc
+           }
       console.log(id)
-     const res=await axios.patch(`http://localhost:8080/modeofdelivery/${id}`,send)
+     const res=await axios.patch(`http://localhost:8080/leadsstatus/${id}`,send)
       const data=await res.data
       console.log(data)
       handleData()
@@ -32,19 +30,18 @@ export default function PatchModel({name,bgcolor,hover,id,patchmode,patchremark,
     }
     return (
       <>
-                <Text fontSize={"18px"} onClick={onOpen}>{name}</Text>
+          <Text fontSize={"18px"} onClick={onOpen}>{name}</Text>
   <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Mode of Delivery</ModalHeader>
+            <ModalHeader>Leads Details</ModalHeader>
             <ModalCloseButton />
-            <ModalBody>
-                <label htmlFor="">Model Name</label>
-             <Input placeholder='Model Name' onChange={(e)=>setMode(e.target.value)} value={mode}></Input>
-            <label htmlFor="">Remark</label>
-             <Input placeholder="Remark" onChange={(e)=>setRemark(e.target.value)} value={remark}></Input>
+            <ModalBody lineHeight={"30px"}>
+            <label htmlFor="">Status</label>
+             <Input placeholder="Status" onChange={(e)=>setStatus(e.target.value)}value={Status}></Input>
+             <label htmlFor="">Description</label>
+             <Input placeholder="Description" onChange={(e)=>setDesc(e.target.value)} value={Desc}></Input>
             </ModalBody>
-  
             <ModalFooter>
               <Button colorScheme='blue' mr={3} onClick={()=>handleClick()} _hover={{transform:"scale(1.1)",transition:"0.5s"}}>
                 Add

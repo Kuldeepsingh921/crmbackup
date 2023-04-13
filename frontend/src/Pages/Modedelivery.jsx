@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import {Box,Text,Flex,Input,Icon,Search,Label,Button, Table} from "@chakra-ui/react"
 import {AiOutlineSearch} from "react-icons/ai"
-import Modal from '../components/Modal'
-import Tablediv from '../components/Table'
+import Modal from '../components/Master/ModeOfDelivery/Modal'
+import Tablediv from '../components/Master/ModeOfDelivery/Table'
 import axios from 'axios'
 import PageTitle from '../components/Title'
 const Modedelivery = () => {
@@ -33,7 +33,7 @@ const Modedelivery = () => {
             {/* <Button backgroundColor={"#be1e2d"} color="white" _hover={{transform:"scale(1.1)",transition:"0.5s"}}>
                 <Text fontSize={"18px"}>Add new node</Text>
             </Button> */}
-            <Modal name="Add new node" bgcolor={"#c63a47"} hover={hover} handleData={handleData}/>
+            <Modal name="Add New Mode"  bgcolor={"#c63a47"} hover={hover} handleData={handleData}/>
         </Flex>
         </Box>
        

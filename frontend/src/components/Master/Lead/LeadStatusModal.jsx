@@ -10,15 +10,18 @@ import {
   } from '@chakra-ui/react'
   import axios from "axios"
 import {useState} from "react"
-export default function FollowupModal({name,bgcolor,hover,handleData,headername}) {
+export default function LeadStatusModal({name,bgcolor,hover,handleData,headername}) {
     const { isOpen, onOpen, onClose } = useDisclosure()
-  const [followup,setFollowup]=useState("")
+  const [Status,setStatus]=useState("")
+  const [Desc,setDesc]=useState("")
+
     const handleClick=async()=>{
       const send={
-       followup:followup
+       status:Status,
+       desc:Desc
       }
      
-      const res=await axios.post("http://localhost:8080/masterfollowup/addfollowup",send)
+      const res=await axios.post("http://localhost:8080/leadsstatus/addleadstatus",send)
       const data=await res.data
       console.log(data)
       handleData()
@@ -26,9 +29,9 @@ export default function FollowupModal({name,bgcolor,hover,handleData,headername}
     onClose()
     }
     return (
-      <>
-        <Button backgroundColor="blue.600" color="white" _hover={{bgColor:"blue.500"}} mt="10px">
-                <Text fontSize={"15px"} onClick={onOpen}>{name}</Text>
+      <div style={{marginTop:"10px"}}>
+        <Button bgColor="blue.600" color="white" _hover={{bgColor:"blue.500"}}>
+                <Text fontSize={"15px"}  onClick={onOpen}>{name}</Text>
             </Button>
   
         <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
@@ -37,8 +40,10 @@ export default function FollowupModal({name,bgcolor,hover,handleData,headername}
             <ModalHeader>{headername}</ModalHeader>
             <ModalCloseButton />
             <ModalBody lineHeight={"30px"}>
-            <label htmlFor="">Follow Up Medium</label>
-             <Input placeholder="Follow Up Medium" onChange={(e)=>setFollowup(e.target.value)}></Input>
+            <label htmlFor="">Status</label>
+             <Input placeholder="Status" onChange={(e)=>setStatus(e.target.value)}></Input>
+             <label htmlFor="">Description</label>
+             <Input placeholder="Description" onChange={(e)=>setDesc(e.target.value)}></Input>
             </ModalBody>
   
             <ModalFooter>
@@ -49,6 +54,6 @@ export default function FollowupModal({name,bgcolor,hover,handleData,headername}
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </>
+      </div>
     )
   }

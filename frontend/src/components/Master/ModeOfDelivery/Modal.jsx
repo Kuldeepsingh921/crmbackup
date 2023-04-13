@@ -29,8 +29,8 @@ export default function AddModal({name,bgcolor,hover,handleData}) {
     }
     return (
       <>
-        <Button backgroundColor={bgcolor} color="white" _hover={hover}>
-                <Text fontSize={"18px"} onClick={onOpen}>{name}</Text>
+        <Button backgroundColor="blue.600" color="white" _hover={{bgColor:"blue.500"}} mt="10px">
+                <Text fontSize={"15px"} onClick={onOpen}>{name}</Text>
             </Button>
   
         <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>

@@ -1,12 +1,21 @@
 const multer = require('multer');
 
+
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'public/uploads')
     },
     filename: function (req, file, cb) {
         const date = Date.now() 
-        cb(null,  date+"-"+file.originalname)
+        const email = req.body.email;
+        const name = "p";
+        let fileext = file.originalname.split('.').pop();
+       
+        // console.log(req.body,11)
+        // cb(null,  date+"-"+file.originalname)
+        cb(null,  email+"-"+name+"."+fileext)
+
     }
   });
 
@@ -17,7 +26,7 @@ const storage = multer.diskStorage({
         }
         else{
             cb(
-                new Error("please change your file type or fill type not support")
+                new Error("please change your file type or filled type not support")
                 ,false)
         }
     }

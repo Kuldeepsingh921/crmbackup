@@ -16,7 +16,7 @@ app.use(express.json())
 
 app.use(express.urlencoded({extended:true}))
 
-app.use(express.static(path.join(__dirname, 'public/')))
+app.use(express.static(path.join(__dirname)))
 
 const superModel=require("./Model/SuperModel")
 
@@ -65,6 +65,7 @@ const excelfileRoute=require("./Routes/excelleads")
 
 const loginRoute=require("./Routes/Login")
 const DistributeLeadsRoute = require("./Routes/DistributeLeadsRoute")
+const MasterLeadsStatus=require("./Routes/MasterLeadsStatusRoute")
 
 app.use("/superadmin",superRouter)
 
@@ -111,7 +112,7 @@ app.use("/excelleads",excelfileRoute)
 
 app.use("/enquiryleads",addLeadsRoute)
 app.use("/distributeLeads",DistributeLeadsRoute)
-
+app.use("/leadsstatus",MasterLeadsStatus)
 
 app.get("/",(req,res)=>{
     res.send("hello")
